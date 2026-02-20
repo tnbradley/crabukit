@@ -130,6 +130,25 @@ cd crabukit
 pip install -e ".[dev]"
 ```
 
+### 🔒 Safe Install Wrapper (Recommended)
+
+For the safest installation experience, use our wrapper script that combines Clawdex + Crabukit:
+
+```bash
+# Copy wrapper to your home directory
+cp scripts/claw-safe-install.sh ~/.claw-safe-install.sh
+
+# Add to your shell config
+echo "source ~/.claw-safe-install.sh" >> ~/.zshrc
+
+# Use it
+claw-safe-install youtube-summarize
+# or
+csi youtube-summarize
+```
+
+Works **with or without Clawdex** installed. See [scripts/README.md](scripts/README.md) for details.
+
 ## 🧪 CI/CD Integration
 
 ### GitHub Actions
