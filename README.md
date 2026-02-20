@@ -201,5 +201,5 @@ MIT License - see [LICENSE](LICENSE) file.
 ---
 
 <p align="center">
-  <sub>Built with 🦀 by <a href="https://github.com/troy">@troy</a></sub>
+  <sub>Built with 🦀 by <a href="https://github.com/tnbradley">@tnbradley</a></sub>
 </p>
