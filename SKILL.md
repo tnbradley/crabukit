@@ -29,7 +29,7 @@ Crabukit **automatically integrates with Clawdex** if installed:
 
 ```bash
 # Install Clawdex for database-based protection
-clawdbot install clawdex
+clawdhub install clawdex
 
 # Now crabukit will:
 # 1. Check Clawdex database (known 824+ malicious skills)
@@ -82,9 +82,14 @@ Crabukit assigns a score (0-100) based on findings:
 ## Installation
 
 ```bash
-# As OpenClaw skill
-clawdbot install crabukit
+# Via ClawdHub (when published)
+clawdhub install crabukit
 
 # Or via pip
 pip install crabukit
+
+# Or from source
+git clone https://github.com/tnbradley/crabukit.git
+cd crabukit
+pip install -e .
 ```
