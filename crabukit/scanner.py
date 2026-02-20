@@ -10,6 +10,11 @@ from crabukit.analyzers.python_ast import PythonAnalyzer
 from crabukit.analyzers.bash_static import BashAnalyzer
 from crabukit.analyzers.permissions import PermissionAnalyzer
 from crabukit.rules.patterns import Finding, Severity
+from crabukit.external_scanners import (
+    run_external_scanners,
+    convert_external_to_findings,
+    check_clawdex_installed,
+)
 
 
 @dataclass
@@ -145,6 +150,17 @@ class SkillScanner:
         if not self.skill_path.is_dir():
             self.errors.append(f"Skill path is not a directory: {self.skill_path}")
             return self._build_result()
+        
+        # Run external scanners (Clawdex, etc.) if available
+        skill_name = self.skill_path.name
+        external_results = run_external_scanners(skill_name)
+        if external_results:
+            external_findings = convert_external_to_findings(external_results)
+            self.findings.extend(external_findings)
+            # If Clawdex reports malicious, we can skip further scanning
+            if any(r.is_malicious for r in external_results):
+                duration_ms = (time.time() - start_time) * 1000
+                return self._build_result(skill_name, duration_ms)
         
         # Parse SKILL.md
         skill_parser = SkillMdParser(self.skill_path)

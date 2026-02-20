@@ -54,6 +54,19 @@ class CLIFormatter:
         self.console.print(f"[bold]Skill:[/bold] {result.skill_name}")
         self.console.print(f"[bold]Path:[/bold] {result.skill_path}")
         self.console.print(f"[bold]Files scanned:[/bold] {result.files_scanned}")
+        
+        # Show external scanner info
+        external_findings = [f for f in result.findings if f.file_path == "external_scan"]
+        if external_findings:
+            scanners = set()
+            for f in external_findings:
+                if "CLAWDEX" in f.rule_id:
+                    scanners.add("Clawdex")
+                elif "EXTERNAL_" in f.rule_id:
+                    scanners.add("External")
+            if scanners:
+                self.console.print(f"[bold green]✓ External scanners:[/bold green] {', '.join(scanners)}")
+        
         self.console.print()
     
     def _print_summary(self, result: ScanResult):

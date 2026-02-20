@@ -1,11 +1,11 @@
 ---
 name: crabukit
-description: Security scanner for OpenClaw skills. Analyzes SKILL.md and scripts for dangerous permissions, hardcoded secrets, shell injection vulnerabilities, and malicious code patterns. Use when (1) installing a skill from an untrusted source, (2) developing a skill before publishing, (3) auditing installed skills, or (4) running CI/CD security checks.
+description: Security scanner for OpenClaw skills with Clawdex integration. Analyzes SKILL.md and scripts for dangerous permissions, hardcoded secrets, shell injection vulnerabilities, and malicious code patterns. Automatically uses Clawdex database if installed for known-malicious skill detection. Use when (1) installing a skill from an untrusted source, (2) developing a skill before publishing, (3) auditing installed skills, or (4) running CI/CD security checks.
 ---
 
 # 🔒 Crabukit
 
-Security scanner for OpenClaw skills. Prevents installation of malicious or vulnerable skills by static analysis.
+Security scanner for OpenClaw skills. Prevents installation of malicious or vulnerable skills by static analysis. **Integrates with Clawdex** for comprehensive protection.
 
 ## Quick Start
 
@@ -23,10 +23,29 @@ crabukit scan ./my-skill --fail-on=high
 crabukit list-rules
 ```
 
+## 🔌 Clawdex Integration
+
+Crabukit **automatically integrates with Clawdex** if installed:
+
+```bash
+# Install Clawdex for database-based protection
+clawdbot install clawdex
+
+# Now crabukit will:
+# 1. Check Clawdex database (known 824+ malicious skills)
+# 2. Run behavior analysis (zero-day detection)
+# → Defense in depth!
+```
+
+**Layered Protection:**
+- **Clawdex**: Database of known-bad skills (fast lookup)
+- **Crabukit**: Behavior analysis for zero-days (static analysis)
+
 ## What It Detects
 
 | Category | Issues |
 |----------|--------|
+| **External DB** | Known malicious skills (via Clawdex) |
 | **Secrets** | Hardcoded API keys, private keys, passwords |
 | **Code Injection** | `eval()`, `exec()`, `subprocess(shell=True)` |
 | **Shell Risks** | `curl \| bash`, `rm -rf`, unquoted variables |
