@@ -75,6 +75,32 @@ Score: 100/100
 Recommendation: Do not install this skill.
 ```
 
+## 🔌 Clawdex Integration
+
+Crabukit **automatically detects and uses Clawdex** when installed:
+
+```bash
+# Install Clawdex for database-based protection
+clawdhub install clawdex
+```
+
+**Defense in depth:**
+- **Layer 1**: Clawdex checks 824+ known malicious skills (instant)
+- **Layer 2**: Crabukit behavior analysis catches zero-days
+
+**Example with both scanners:**
+```
+✓ External scanners: Clawdex
+
+⚪ INFO
+  → ✅ Clawdex: Verified safe
+    Database reports 'skill-name' as BENIGN
+
+🟡 MEDIUM
+  → Destructive operation without warning
+    (Crabukit behavior analysis)
+```
+
 ## 🔧 Installation
 
 ### Via pip
