@@ -399,7 +399,7 @@ PROMPT_INJECTION_PATTERNS = {
         "description": "Attempts to extract system prompt or instructions",
     },
     "dan_jailbreak": {
-        "pattern": r"(?i)(?:DAN|do\s+anything\s+now|jailbreak|DUDE|STAN)",
+        "pattern": r"(?i)\b(?:DAN|do\s+anything\s+now|jailbreak|DUDE|STAN)\b",
         "severity": Severity.MEDIUM,
         "title": "Potential jailbreak attempt",
         "description": "References known jailbreak personas (DAN, STAN, etc.)",

@@ -50,26 +50,8 @@ def scan(skill_path: str, fail_on: Optional[str], format: str):
         formatter.print_report(result)
     elif format == 'json':
         import json
-        # Simple JSON output for now
-        output = {
-            "skill_name": result.skill_name,
-            "skill_path": str(result.skill_path),
-            "score": result.score,
-            "risk_level": result.risk_level,
-            "files_scanned": result.files_scanned,
-            "findings": [
-                {
-                    "rule_id": f.rule_id,
-                    "title": f.title,
-                    "description": f.description,
-                    "severity": f.severity.value,
-                    "file": f.file_path,
-                    "line": f.line_number,
-                }
-                for f in result.findings
-            ]
-        }
-        click.echo(json.dumps(output, indent=2))
+        # Use the scanner's to_dict method for complete output
+        click.echo(json.dumps(result.to_dict(), indent=2))
     
     # Determine exit code
     if fail_on:
