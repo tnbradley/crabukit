@@ -34,38 +34,54 @@ def check_clawdex_installed() -> bool:
 
 
 def run_clawdex_check(skill_name: str) -> Optional[ExternalScanResult]:
-    """Run Clawdex check on a skill name.
+    """Run Clawdex API check on a skill name.
     
-    Returns None if Clawdex is not installed or check fails.
+    Uses the Clawdex API: https://clawdex.koi.security/api/skill/<skill_name>
+    Returns None if check fails.
     """
     try:
-        # Try to run clawdex check command
-        # Note: This is based on documented behavior; actual command may vary
+        # Call Clawdex API directly
         result = subprocess.run(
-            ["clawdbot", "agent", "--local", "--message", f"Use clawdex to check if skill '{skill_name}' is malicious"],
+            ["curl", "-s", f"https://clawdex.koi.security/api/skill/{skill_name}"],
             capture_output=True,
             text=True,
             timeout=10
         )
         
-        # Parse output for malicious/safe indicators
-        output = result.stdout.lower()
+        if result.returncode != 0:
+            return None
         
-        if "malicious" in output or "flagged" in output:
+        # Parse JSON response
+        try:
+            data = json.loads(result.stdout)
+            verdict = data.get("verdict", "unknown").lower()
+        except json.JSONDecodeError:
+            return None
+        
+        if verdict == "malicious":
             return ExternalScanResult(
                 scanner_name="Clawdex",
                 is_malicious=True,
                 confidence="high",
-                details=f"Clawdex database reports '{skill_name}' as known malicious",
-                references=["https://clawdex.koi.security"],
+                details=f"🚫 Clawdex database reports '{skill_name}' as MALICIOUS. This skill has been flagged as harmful and may steal credentials, install backdoors, or exfiltrate data.",
+                references=["https://clawdex.koi.security", "https://www.koi.ai/blog/clawhavoc-341-malicious-clawedbot-skills-found-by-the-bot-they-were-targeting"],
                 raw_output=result.stdout
             )
-        elif "safe" in output or "clean" in output:
+        elif verdict == "benign":
             return ExternalScanResult(
                 scanner_name="Clawdex",
                 is_malicious=False,
                 confidence="high",
-                details=f"Clawdex database reports '{skill_name}' as safe",
+                details=f"✅ Clawdex database reports '{skill_name}' as BENIGN (safe to install).",
+                references=["https://clawdex.koi.security"],
+                raw_output=result.stdout
+            )
+        elif verdict == "unknown":
+            return ExternalScanResult(
+                scanner_name="Clawdex",
+                is_malicious=False,
+                confidence="low",
+                details=f"⚠️  Clawdex database has no record for '{skill_name}' (not yet audited). Proceeding with behavior analysis...",
                 references=["https://clawdex.koi.security"],
                 raw_output=result.stdout
             )
@@ -101,19 +117,30 @@ def convert_external_to_findings(external_results: List[ExternalScanResult]) -> 
             severity = Severity.CRITICAL if result.confidence == "high" else Severity.HIGH
             findings.append(Finding(
                 rule_id=f"EXTERNAL_{result.scanner_name.upper()}_MALICIOUS",
-                title=f"{result.scanner_name}: Known malicious skill",
+                title=f"🚫 {result.scanner_name}: KNOWN MALICIOUS SKILL",
                 description=result.details,
                 severity=severity,
                 file_path="external_scan",
                 line_number=0,
-                remediation=f"Do not install this skill. See {', '.join(result.references)}",
+                remediation=f"DO NOT INSTALL. This skill is in the Clawdex malicious database. See {', '.join(result.references)}",
+                references=result.references
+            ))
+        elif result.confidence == "low":
+            # Unknown/not audited - informational
+            findings.append(Finding(
+                rule_id=f"EXTERNAL_{result.scanner_name.upper()}_UNKNOWN",
+                title=f"⚠️  {result.scanner_name}: Not yet audited",
+                description=result.details,
+                severity=Severity.INFO,
+                file_path="external_scan",
+                line_number=0,
                 references=result.references
             ))
         else:
-            # Optional: Add info-level finding for safe skills
+            # Safe - info level
             findings.append(Finding(
                 rule_id=f"EXTERNAL_{result.scanner_name.upper()}_SAFE",
-                title=f"{result.scanner_name}: Skill verified safe",
+                title=f"✅ {result.scanner_name}: Verified safe",
                 description=result.details,
                 severity=Severity.INFO,
                 file_path="external_scan",
