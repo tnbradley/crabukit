@@ -11,8 +11,11 @@ Crabukit analyzes OpenClaw skills for security vulnerabilities, malicious code p
 ## 🚀 Quick Start
 
 ```bash
-# Install
+# Install crabukit
 pip install crabukit
+
+# 🔒 Safely install a skill (downloads, scans, installs if safe)
+crabukit install youtube-summarize
 
 # Scan a skill before installing
 crabukit scan ./my-skill/

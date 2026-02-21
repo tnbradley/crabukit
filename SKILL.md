@@ -23,6 +23,9 @@ Security scanner for OpenClaw skills. Prevents installation of malicious or vuln
 ## Quick Start
 
 ```bash
+# Safely install a skill (scans before installing)
+crabukit install youtube-summarize
+
 # Scan a local skill before installing
 crabukit scan ./suspicious-skill/
 
