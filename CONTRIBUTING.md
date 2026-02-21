@@ -18,11 +18,10 @@ Please include:
 
 **Do not open public issues for security vulnerabilities.**
 
-Instead, email security@crabukit.dev with:
-- Description of the vulnerability
-- Steps to reproduce
-- Potential impact
-- Suggested fix (if any)
+Instead, use GitHub's private vulnerability reporting:
+https://github.com/tnbradley/crabukit/security/advisories
+
+Or open a private discussion with the maintainer.
 
 ## 💡 Feature Requests
 
@@ -35,7 +34,7 @@ We welcome feature requests! Please open an issue with:
 
 ```bash
 # Clone the repo
-git clone https://github.com/troy/crabukit.git
+git clone https://github.com/tnbradley/crabukit.git
 cd crabukit
 
 # Create virtual environment
@@ -124,8 +123,8 @@ We especially welcome contributions in:
 
 ## 💬 Community
 
-- GitHub Discussions: [github.com/troy/crabukit/discussions](https://github.com/troy/crabukit/discussions)
-- Issues: [github.com/troy/crabukit/issues](https://github.com/troy/crabukit/issues)
+- GitHub Discussions: [github.com/tnbradley/crabukit/discussions](https://github.com/tnbradley/crabukit/discussions)
+- Issues: [github.com/tnbradley/crabukit/issues](https://github.com/tnbradley/crabukit/issues)
 
 ## 📜 Code of Conduct
 

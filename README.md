@@ -128,7 +128,7 @@ clawdbot install crabukit
 ### Development
 
 ```bash
-git clone https://github.com/troy/crabukit.git
+git clone https://github.com/tnbradley/crabukit.git
 cd crabukit
 pip install -e ".[dev]"
 ```
@@ -165,17 +165,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: troy/crabukit-action@v1
-        with:
-          skill-path: ./my-skill
-          fail-on: high
+      - name: Install crabukit
+        run: pip install crabukit
+      - name: Scan skill
+        run: crabukit scan ./my-skill --fail-on=high
 ```
 
 ### Pre-commit Hook
 
 ```yaml
 repos:
-  - repo: https://github.com/troy/crabukit
+  - repo: https://github.com/tnbradley/crabukit
     rev: v0.2.0
     hooks:
       - id: crabukit-scan
@@ -234,7 +234,9 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## 🛡️ Security
 
-For security issues, please email security@crabukit.dev or see [SECURITY.md](SECURITY.md).
+For security issues, please use GitHub's private vulnerability reporting:  
+https://github.com/tnbradley/crabukit/security/advisories  
+Or see [SECURITY.md](SECURITY.md) for details.
 
 ## 📜 License
 
