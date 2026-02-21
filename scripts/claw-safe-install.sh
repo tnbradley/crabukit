@@ -1,6 +1,11 @@
 #!/bin/bash
 # 🔒 claw-safe-install - Safe skill installer with security scanning
 # 
+# SECURITY NOTE: This is a DEFENSIVE security tool. It scans skills BEFORE
+# installation to detect malware. It does NOT modify your system except:
+# 1. Downloads skills to a temp directory for scanning
+# 2. Optionally adds an alias to your shell if you manually source this file
+#
 # This script wraps clawdhub install with automatic security scanning
 # using both Clawdex (database) and Crabukit (behavior analysis).
 #

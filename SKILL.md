@@ -5,15 +5,12 @@ metadata:
   openclaw:
     emoji: "🔒"
     category: "security"
-    requires:
-      bins: [crabukit]
-      python_packages: [pyyaml, rich, click]
     install:
       - id: pip
         kind: pip
-        package: crabukit
+        package: .
         bins: [crabukit]
-        label: Install crabukit via pip
+        label: Install crabukit from source
 ---
 
 # 🔒 Crabukit

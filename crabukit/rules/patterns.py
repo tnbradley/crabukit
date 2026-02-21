@@ -375,9 +375,13 @@ BASH_PATTERNS = {
 # =============================================================================
 # PROMPT INJECTION PATTERNS (SKILL.MD CONTENT)
 # =============================================================================
+# NOTE: The following patterns are SECURITY DETECTION RULES used to identify
+# prompt injection attacks in skill content. These are DEFENSIVE patterns - 
+# they detect when someone tries to inject malicious instructions.
+# They do NOT perform any injection themselves.
 
 PROMPT_INJECTION_PATTERNS = {
-    # Direct injection attempts
+    # Direct injection attempts - DETECTION ONLY
     "ignore_instructions": {
         "pattern": r"(?i)(?:ignore|disregard)\s+(?:all\s+)?(?:previous|prior|earlier|above)\s+(?:instructions?|directives?|commands?|prompts?)",
         "severity": Severity.HIGH,
