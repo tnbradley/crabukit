@@ -11,9 +11,11 @@
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-Instead, please report them via email to:
+Instead, please report them via GitHub's private vulnerability reporting feature:
 
-📧 **security@crabukit.dev**
+🔗 **https://github.com/tnbradley/crabukit/security/advisories**
+
+Or open a private discussion with the maintainer.
 
 We aim to respond within 48 hours.
 
